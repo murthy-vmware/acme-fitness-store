@@ -1446,4 +1446,4 @@ Azure Spring Apps or VMware Tanzu components, go to:
 * [API Portal](https://docs.vmware.com/en/API-portal-for-VMware-Tanzu/index.html)
 
 
-[![Deploy to Azure](deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2ftestARM%2fazuredeploy.json)
+[![Deploy to Azure](deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2ftestARM%2fazuredeploy.json)
