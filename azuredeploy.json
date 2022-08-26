@@ -1,49 +1,87 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "location" : {
-            "type" : "string",
-            "defaultValue" : "[resourceGroup().location]"
-        },
-        "db_for_mysql_name": {
-            "defaultValue": "[concat('sclabm-', uniqueString(resourceGroup().id))]",
-            "type": "string"
-        },
-        "mysql_admin_password": {
-            "type" :"securestring",
-            "defaultValue": "super$ecr3t",
-            "metadata" :{
-                "description" : "The administrator password for the MySQL instance"
-            }
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "administratorLogin": {
+      "type": "string"
     },
-    "resources": [
-        {
-            "type": "Microsoft.DBforMySQL/servers",
-            "apiVersion": "2017-12-01",
-            "name": "[parameters('db_for_mysql_name')]",
-            "location": "[parameters('location')]",
-            "sku": {
-                "name": "B_Gen5_1",
-                "tier": "Basic",
-                "family": "Gen5",
-                "capacity": 1
-            },
-            "properties": {
-                "administratorLogin" : "sqlAdmin",
-                "administratorLoginPassword" : "[parameters('mysql_admin_password')]",
-                "createMode" : "Default",
-                "storageProfile": {
-                    "storageMB": 5120,
-                    "backupRetentionDays": 7,
-                    "geoRedundantBackup": "Disabled",
-                    "storageAutoGrow": "Enabled"
-                },
-                "version": "5.7",
-                "sslEnforcement": "Enabled"
-            }
-        }
-        
-    ]
+    "administratorLoginPassword": {
+      "type": "secureString"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "serverName": {
+      "type": "string"
+    },
+    "serverEdition": {
+      "type": "string",
+      "defaultValue": "GeneralPurpose"
+    },
+    "skuSizeGB": {
+      "type": "int",
+      "defaultValue": 128
+    },
+    "dbInstanceType": {
+      "type": "string",
+      "defaultValue": "Standard_D4ds_v4"
+    },
+    "haMode": {
+      "type": "string",
+      "defaultValue": "ZoneRedundant"
+    },
+    "availabilityZone": {
+      "type": "string",
+      "defaultValue": "1"
+    },
+    "version": {
+      "type": "string",
+      "defaultValue": "12"
+    },
+    "virtualNetworkExternalId": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "subnetName": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "privateDnsZoneArmResourceId": {
+      "type": "string",
+      "defaultValue": ""
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.DBforPostgreSQL/flexibleServers",
+      "apiVersion": "2021-06-01",
+      "name": "[parameters('serverName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('dbInstanceType')]",
+        "tier": "[parameters('serverEdition')]"
+      },
+      "properties": {
+        "version": "[parameters('version')]",
+        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+        "network": {
+          "delegatedSubnetResourceId": "[if(empty(parameters('virtualNetworkExternalId')), json('null'), json(format('{0}/subnets/{1}', parameters('virtualNetworkExternalId'), parameters('subnetName'))))]",
+          "privateDnsZoneArmResourceId": "[if(empty(parameters('virtualNetworkExternalId')), json('null'), parameters('privateDnsZoneArmResourceId'))]"
+        },
+        "highAvailability": {
+          "mode": "[parameters('haMode')]"
+        },
+        "storage": {
+          "storageSizeGB": "[parameters('skuSizeGB')]"
+        },
+        "backup": {
+          "backupRetentionDays": 7,
+          "geoRedundantBackup": "Disabled"
+        },
+        "availabilityZone": "[parameters('availabilityZone')]"
+      }
+    }
+  ]
 }
