@@ -1444,3 +1444,5 @@ Azure Spring Apps or VMware Tanzu components, go to:
 * [Spring Cloud](https://spring.io/projects/spring-cloud)
 * [Spring Cloud Gateway](https://docs.vmware.com/en/VMware-Spring-Cloud-Gateway-for-Kubernetes/index.html)
 * [API Portal](https://docs.vmware.com/en/API-portal-for-VMware-Tanzu/index.html)
+
+
