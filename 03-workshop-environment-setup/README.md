@@ -16,7 +16,7 @@ Use the below settings for deploying this ARM template
  - Create a new resource group
  - Select the nearest region in the location field from [the list of regions where Azure Spring Apps is available](https://azure.microsoft.com/global-infrastructure/services/?products=spring-apps&regions=all).
 
-[![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2ftestARM%2fazuredeploy.json)
+[![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2fworkshop%2f03-workshop-environment-setup%2fazuredeploy.json)
 
 ### Setup Github Codspaces
 
