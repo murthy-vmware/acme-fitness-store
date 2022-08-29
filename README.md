@@ -14,7 +14,7 @@ An optional introduction to Azure for Spring Developers.
 
 Introduction to ASA-E
 
-## [03 - Environment Setup](03-environment-setup/README.md)
+## [03 - Environment Setup](03-workshop-environment-setup/README.md)
 
 ## [04 - Create asa-e instance](04-create-asa-e-instance/README.md)
 
