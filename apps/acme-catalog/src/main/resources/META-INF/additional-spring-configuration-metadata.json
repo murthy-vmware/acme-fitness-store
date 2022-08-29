@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "userServiceUrl",
-      "type": "java.lang.String",
-      "description": "URL for acme user service."
-  }
-] }
