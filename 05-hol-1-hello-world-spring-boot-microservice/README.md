@@ -101,7 +101,7 @@ Go to [the Azure portal](https://portal.azure.com/):
 - Find the "Test endpoint" in the "Essentials" section.
 ![Test endpoint](media/01-test-endpoint.png)
 - This will give you something like:
-  `https://primary:BBQM6nsYnmmdQREXQINityNx63kWUbjsP7SIvqKhOcWDfP6HJTqg27klMLaSfpTB@hello-world.test.azuremicroservices.io/hello-world/default/`
+  `https://primary:<REDACTED>@hello-world.test.azuremicroservices.io/hello-world/default/`
   >💡 Note the text between `https://` and `@`.  These are the basic authentication credentials, without which you will not be authorized to access the service.
 - Append `hello/` to the URL.  Failure to do this will result in a "404 not found".
 
