@@ -2,6 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "baseName": {
+            "type": "string"
+        },
         "administratorLogin": {
             "type": "string"
         },
@@ -128,6 +131,12 @@
             "metadata": {
                 "description": "Specify the resource group name of an existing storage account for diagnostics."
             }
+        },
+        "tagsArray": {
+            "type": "object",
+            "metadata": {
+                "description": "See documentation on tags: https://docs.microsoft.com/azure/azure-resource-manager/management/tag-resources."
+            }
         }
     },
     "resources": [
@@ -171,6 +180,19 @@
                     "name": "PerGB2018"
                 },
                 "retentionInDays": 30
+            }
+        },
+        {
+            "type": "Microsoft.Insights/components",
+            "apiVersion": "2020-02-02",
+            "name": "[concat(parameters('baseName'),'-insights')]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tagsArray')]",
+            "kind": "other",
+            "properties": {
+                "Application_Type": "Web",
+                "Flow_Type": "Bluefield",
+                "Request_Source": "rest"
             }
         },
         {
