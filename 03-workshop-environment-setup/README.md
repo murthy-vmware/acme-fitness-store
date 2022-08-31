@@ -1,10 +1,11 @@
 ## Environment setup for the workshop
 
-In this section you will setup the required software/artifacts to run this workshop.
+Now that we have a basic undertstanding of Azure and ASA_E, in this section you will setup the required software/resources to run this workshop.
 
-### Create Azure Resources
+### Create Azure Resources using ARM template
 
-We will use an ARM template to create the required Azure resources that are needed for this workshop. There are other manual/automated ways in which you can provision these resources, but to save time for the workshop participants we will leverage this ARM template. This ARM template provisions the below resources
+As we had already noted in the prior sections and also as we go to next sections, there are resources that need to be in place to execute this workshop. As the goal of this workshop is to focus more on the app/service related tasks and less on the underlying infrastructre tasks, we are providing an Azure ARM template that will provision the required reources.
+
  - Resource Group
  - Azure Cache for Redis
  - Azure SQL for Postgres
