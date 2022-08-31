@@ -22,6 +22,9 @@ Please right click on the below button and choose the Open in new tab option. Th
 |subscription| Azure subscription name| Leave the auto-populated value
 | Resource Group| The Azure resource group under which all these resources will be created | Click on the "Create new" link and enter a new name for the resource group|
 | Region | Select the nearest region in the location field from [the list of regions where Azure Spring Apps is available](https://azure.microsoft.com/global-infrastructure/services/?products=spring-apps&regions=all) | EastUS |
+| Base Name | | my-asae| 
+| Administrator Login| Admin login for Postgres DB | admin |
+| Administrator Login Password| Admin login password for Postgres DB | admin |
 
 <!-- [![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2fworkshop%2f03-workshop-environment-setup%2farm-rg.json) -->
 
