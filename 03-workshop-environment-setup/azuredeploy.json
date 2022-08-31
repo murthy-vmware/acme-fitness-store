@@ -153,7 +153,7 @@
         {
             "type": "Microsoft.DBforPostgreSQL/flexibleServers",
             "apiVersion": "2021-06-01",
-            "name": "[parameters('serverName')]",
+            "name": "[concat(parameters('baseName'),'-db')]",
             "location": "[parameters('location')]",
             "sku": {
                 "name": "[parameters('dbInstanceType')]",
@@ -183,7 +183,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2015-11-01-preview",
-            "name": "[parameters('log_analytics_workspace_name')]",
+            "name": "[concat(parameters('baseName'),'-la')]",
             "location": "[parameters('location')]",
             "properties": {
                 "sku": {
@@ -204,43 +204,43 @@
                 "Flow_Type": "Bluefield",
                 "Request_Source": "rest"
             }
-        },
-        {
-            "type": "Microsoft.Cache/redis",
-            "apiVersion": "2020-06-01",
-            "name": "[parameters('redisCacheName')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "enableNonSslPort": "[parameters('enableNonSslPort')]",
-                "minimumTlsVersion": "1.2",
-                "sku": {
-                    "capacity": "[parameters('redisCacheCapacity')]",
-                    "family": "[parameters('redisCacheFamily')]",
-                    "name": "[parameters('redisCacheSKU')]"
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Insights/diagnosticSettings",
-            "apiVersion": "2021-05-01-preview",
-            "scope": "[format('Microsoft.Cache/redis/{0}', parameters('redisCacheName'))]",
-            "name": "[parameters('redisCacheName')]",
-            "properties": {
-                "storageAccountId": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('existingDiagnosticsStorageAccountResourceGroup')), 'Microsoft.Storage/storageAccounts', parameters('existingDiagnosticsStorageAccountName'))]",
-                "metrics": [
-                    {
-                        "timeGrain": "AllMetrics",
-                        "enabled": "[parameters('diagnosticsEnabled')]",
-                        "retentionPolicy": {
-                            "days": 90,
-                            "enabled": "[parameters('diagnosticsEnabled')]"
-                        }
-                    }
-                ]
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Cache/redis', parameters('redisCacheName'))]"
-            ]
         }
+        // {
+        //     "type": "Microsoft.Cache/redis",
+        //     "apiVersion": "2020-06-01",
+        //     "name": "[parameters('redisCacheName')]",
+        //     "location": "[parameters('location')]",
+        //     "properties": {
+        //         "enableNonSslPort": "[parameters('enableNonSslPort')]",
+        //         "minimumTlsVersion": "1.2",
+        //         "sku": {
+        //             "capacity": "[parameters('redisCacheCapacity')]",
+        //             "family": "[parameters('redisCacheFamily')]",
+        //             "name": "[parameters('redisCacheSKU')]"
+        //         }
+        //     }
+        // },
+        // {
+        //     "type": "Microsoft.Insights/diagnosticSettings",
+        //     "apiVersion": "2021-05-01-preview",
+        //     "scope": "[format('Microsoft.Cache/redis/{0}', parameters('redisCacheName'))]",
+        //     "name": "[parameters('redisCacheName')]",
+        //     "properties": {
+        //         "storageAccountId": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('existingDiagnosticsStorageAccountResourceGroup')), 'Microsoft.Storage/storageAccounts', parameters('existingDiagnosticsStorageAccountName'))]",
+        //         "metrics": [
+        //             {
+        //                 "timeGrain": "AllMetrics",
+        //                 "enabled": "[parameters('diagnosticsEnabled')]",
+        //                 "retentionPolicy": {
+        //                     "days": 90,
+        //                     "enabled": "[parameters('diagnosticsEnabled')]"
+        //                 }
+        //             }
+        //         ]
+        //     },
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Cache/redis', parameters('redisCacheName'))]"
+        //     ]
+        // }
     ]
 }
