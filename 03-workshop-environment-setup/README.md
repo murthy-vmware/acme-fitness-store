@@ -13,11 +13,15 @@ As we had already noted in the prior sections and also as we go to next sections
  - Azure Key Vault
  - Application Insights workspace
 
-Choose the below options for deploying this ARM template
- - Create a new resource group
- - Select the nearest region in the location field from [the list of regions where Azure Spring Apps is available](https://azure.microsoft.com/global-infrastructure/services/?products=spring-apps&regions=all).
+Please right click on the below button and choose the Open in new tab option. The reason is there are quite a number of fields that need to be populated in that form and we are providing guidance on the values to populate with.
 
 [![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2fworkshop%2f03-workshop-environment-setup%2fazuredeploy.json)
+
+| Field Name | Description | Default Value |
+|------------|-------------|---------------|
+|subscription| Azure subscription name| Leave the auto-populated value
+| Resource Group| The Azure resource group under which all these resources will be created | Click on the "Create new" link and enter a new name for the resource group|
+| Region | Select the nearest region in the location field from [the list of regions where Azure Spring Apps is available](https://azure.microsoft.com/global-infrastructure/services/?products=spring-apps&regions=all) | EastUS |
 
 <!-- [![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2fworkshop%2f03-workshop-environment-setup%2farm-rg.json) -->
 
