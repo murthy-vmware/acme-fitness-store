@@ -3,13 +3,22 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "baseName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "my-asae"
         },
         "administratorLogin": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "admin",
+            "metadata": {
+                "description": "Admin login for Postgres DB"
+            }
         },
         "administratorLoginPassword": {
-            "type": "secureString"
+            "type": "secureString",
+            "defaultValue": "super$ecr3t",
+            "metadata": {
+                "description": "Admin login password for Postgres DB"
+            }
         },
         "location": {
             "type": "string",
