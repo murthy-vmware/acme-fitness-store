@@ -4,7 +4,7 @@
     "parameters": {
         "baseName": {
             "type": "string",
-            "defaultValue": "my-asae"
+            "defaultValue": "[subscription().displayName]"
         },
         "administratorLogin": {
             "type": "string",
@@ -25,7 +25,8 @@
             "defaultValue": "[resourceGroup().location]"
         },
         "serverName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "[concat(subscription().displayName,'-db')]"
         },
         "serverEdition": {
             "type": "string",
