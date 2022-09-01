@@ -1,6 +1,4 @@
-Build a HelloWorld Spring Boot microservice
-
-In this section, we'll build a HelloWorld Spring boot microservice and deploy it to the previously created Azure Spring Apps - Enterprise .
+In the previous section you created an empty azure spring apps instance. In this section we will try to deploy a very simple hello-world spring boot app to get a high level understanding of how to deploy an app and access it. 
 
 ---
 
@@ -62,8 +60,9 @@ Finally, kill running app:
 ```bash
 kill %1
 ```
+The above step ensures that the hello-world app is up and running locally without any issues.
 
-## Create and deploy the application on Azure Spring Apps
+## Create and deploy the application on Azure Spring Apps instance
 
 
 In order to create the app instance graphically, you can use [the Azure portal](https://portal.azure.com/):

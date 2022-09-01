@@ -2,6 +2,22 @@
 
 Now that we have a basic undertstanding of Azure and ASA_E, in this section you will setup the required software/resources to run this workshop.
 
+### Setup Github Codspaces
+This workshop leverages Github Codespaces to provide a development environment for running the instructions. Certainly you can run these instruction from a shell. But for people trying to get familiar with ASA-E for the first time, to rule out any environment related issues we recommend using Github Codespaces.
+
+1. The first step in getting access to github codespaces option for [Azure Samples](https://github.com/Azure-Samples/) is to send your github id to XXX@XXX.com email distribution or to the workshop co-ordinator. The admin of this distribution list will add you to the organization and assign you permissions that makes the Codespaces option visible.
+
+2. Upon getting the confirmation that you are added to the Org, navigate to https://github.com/Azure-Samples/acme-fitness-demo/tree/workshop repository, click "Code" button. You should be able to "Codespaces" as an option listed. If you do not see that option listed, most probably you are not added to [Azure-Samples](https://github.com/Azure-Samples/) org or your github id is still not active in this org. Please discuss this issue with your workshop co-ordinator or send an email to XXX@XXX.com.
+
+3. Assuming the above steps are succesful, you should be able to open a terminal inside VS Code that opens up in Codespaces. Refer to this link to understand more about [Codespaces](https://github.com/CodeSpaces). This Codespace comes installed with the following software:
+   1. * [JDK 17](https://docs.microsoft.com/java/openjdk/download?WT.mc_id=azurespringcloud-github-judubois#openjdk-17)
+   2. * The environment variable `JAVA_HOME` should be set to the path of the JDK installation. The directory specified by this path should have `bin`, `jre`, and `lib` among its subdirectories. Further, ensure your `PATH` variable contains the directory `${JAVA_HOME}/bin`. To test, type `which javac` into bash shell ensure the resulting path points to a file inside `${JAVA_HOME}/bin`.
+   3. * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest&WT.mc_id=azurespringcloud-github-judubois) version 2.31.0 or later. You can check the version of your current Azure CLI installation by running:
+
+    ```bash
+    az --version
+    ```
+
 ### Create Azure Resources using ARM template
 
 As we had already noted in the prior sections and also as we go to next sections, there are resources that need to be in place to execute this workshop. As the goal of this workshop is to focus more on the app/service related tasks and less on the underlying infrastructre tasks, we are providing an Azure ARM template that will provision the required reources.
@@ -9,28 +25,28 @@ As we had already noted in the prior sections and also as we go to next sections
  - Resource Group
  - Azure Cache for Redis
  - Azure SQL for Postgres
- - Log Analytics workspace
+ - Azure Active Directory App Registered
  - Azure Key Vault
+ - Log Analytics workspace
  - Application Insights workspace
 
 Please right click on the below button and choose the Open in new tab option. The reason is there are quite a number of fields that need to be populated in that form and we are providing guidance on the values to populate with.
 
 [![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2fworkshop%2f03-workshop-environment-setup%2fazuredeploy.json)
 
-| Field Name | Description | Default Value |
-|------------|-------------|---------------|
-|subscription| Azure subscription name| Leave the auto-populated value
-| Resource Group| The Azure resource group under which all these resources will be created | Click on the "Create new" link and enter a new name for the resource group|
-| Region | Select the nearest region in the location field from [the list of regions where Azure Spring Apps is available](https://azure.microsoft.com/global-infrastructure/services/?products=spring-apps&regions=all) | EastUS |
-| Base Name | | my-asae| 
-| Administrator Login| Admin login for Postgres DB | admin |
-| Administrator Login Password| Admin login password for Postgres DB | admin |
+
+To know about the description of the fields, click on the little info icon next to every field. For the fields where default value is populated, the recommendation is to use the default for the first time use. 
 
 <!-- [![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2fworkshop%2f03-workshop-environment-setup%2farm-rg.json) -->
 
-### Setup Github Codspaces
+The above deployment takes a while (15-20 mins) to complete. You do not have to wait for this step to complete. You can go ahead with the steps in next section. However it will be useful to check the completion of this step using the below command(s)
+
+// TODO To be filled (Murthy)
+
 
 ## Install the Azure CLI extension
+
+Alright, now that you triggered the task to create the dependent services/resources we will go ahead with the next steps of installing azure cli in our Codespace. While there is an option to use Azure Portal to create the required resources, for the purposes of this workshop we use azure cli. 
 
 Install the Azure Spring Apps extension for the Azure CLI using the following command
 
@@ -77,7 +93,7 @@ source ../scripts/setup-env-variables.sh
 
 ### Login to Azure
 
-Login to the Azure CLI and choose your active subscription. 
+Login to the Azure CLI and choose your active subscription. In the terminal of VS Code in Codespace, run the below commands
 
 ```shell
 az login
@@ -93,3 +109,13 @@ Accept the legal terms and privacy statements for the Enterprise tier.
 az provider register --namespace Microsoft.SaaS
 az term accept --publisher vmware-inc --product azure-spring-cloud-vmware-tanzu-2 --plan asa-ent-hr-mtr
 ```
+
+If you completed all the steps till here, you have successfully created/installed the following resources
+* Accessing a dev environment via Github Codespaces
+* All the dependent resources required for the workshop are installed via an arm template. Run the below command once to make sure all the required resources are up and running. Please refer to this screenshot as a reference to verify the completion.
+
+//TODO Murthy to fill in content here.
+
+Previous guide: [02 - ASA-E Introduction](../02-asa-e-introduction/README.md)
+
+➡️ Next guide: [04 - Create ASA-E instance](../04-create-asa-e-instance/README.md)
