@@ -46,8 +46,7 @@ az spring application-configuration-service bind --app ${CATALOG_SERVICE_APP}
 
 ### Bind to Service Registry
 
-Several application require service discovery using Service Registry, so create
-the bindings:
+Several application require service discovery using Service Registry, so create the bindings:
 
 ```shell
 az spring service-registry bind --app ${PAYMENT_SERVICE_APP}
@@ -60,7 +59,7 @@ Create a custom builder in Tanzu Build Service using the Azure CLI. This custom 
 
 ```shell
 az spring build-service builder create -n ${CUSTOM_BUILDER} \
-    --builder-file azure/builder.json \
+    --builder-file buildpacks/builder.json \
     --no-wait
 ```
 
