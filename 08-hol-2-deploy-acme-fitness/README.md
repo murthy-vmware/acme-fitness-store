@@ -46,7 +46,7 @@ az spring application-configuration-service bind --app ${CATALOG_SERVICE_APP}
 
 ### Bind to Service Registry
 
-Several application require service discovery using Service Registry, so create the bindings:
+Several application require service discovery. This discovery is achieved using Service Registry, so create the bindings:
 
 ```shell
 az spring service-registry bind --app ${PAYMENT_SERVICE_APP}
