@@ -145,6 +145,6 @@ cd ..
 
 ---
 
-⬅️ Previous guide: [01 - Create an Azure Spring Apps instance](../01-create-an-azure-spring-cloud-instance/README.md)
+⬅️ Previous guide: [04 - Create an Azure Spring Apps instance](../04-create-asa-e-instance/README.md)
 
-➡️ Next guide: [03 - Configure monitoring](../03-configure-monitoring/README.md)
+➡️ Next guide: [06 - Acme Fitness Micorservices App Introduction](../06-polyglot-microservices-app-acme-fitness/README.md)

@@ -1,4 +1,4 @@
-This section shows the demo application that we will be using in this workshop to demonstrate the different features of ASA-E.
+This section discusses the demo application that we will be using in this workshop to demonstrate the different features of ASA-E.
 
 ![An image showing the services involved in the ACME Fitness Store. It depicts the applications and their dependencies on different ASA-E services](images/architecture.jpg)
 
@@ -17,3 +17,20 @@ This application is composed of several services:
 
 * 1 NodeJS and static HTML Application
   * A frontend shopping application
+
+
+As you see from the above overview, in addition to the above services there are other dependent ASA-E services also as below
+ - Spring Cloud Gateway
+ - Azure Active Directory
+ - Azure Postgres 
+ - Azure Cache for Redis
+ - Azure Active Directory
+ - Azure Key Vault
+ - Azure services for Monitoring and Logging
+
+The next section will introduce these services, their usage in this architecture. Following sections will discuss how they can be configured. 
+
+
+⬅️ Previous guide: [05 - Deploy Simple Hello World spring boot service](../05-hol-1-hello-world-spring-boot-microservice/README.md)
+
+➡️ Next guide: [07 - ASA-E components Overview](../07-asa-e-components-overview/README.md)
