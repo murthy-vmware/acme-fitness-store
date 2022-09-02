@@ -1,4 +1,8 @@
-## Configure Spring Cloud Gateway
+In this section we are going to create a spring cloud gateway instance for acme-fitness and connect all the backend services to this gateway instance. This way the gateway instance acts as the proxy for any requests that are targeted towards the acme-fitness application.
+
+Once this section is complete, the [architecture](images/acme-fitness-with-scg.jpg) looks as below
+
+## 1. Configure Spring Cloud Gateway
 
 Assign an endpoint and update the Spring Cloud Gateway configuration with API
 information:
@@ -6,7 +10,10 @@ information:
 ```shell
 az spring gateway update --assign-endpoint true
 export GATEWAY_URL=$(az spring gateway show | jq -r '.properties.url')
-    
+```
+The assign-endpoint argument with a value of true creates a publicly accessible endpoint for the gateway.
+
+```shell
 az spring gateway update \
     --api-description "Acme Fitness Store API" \
     --api-title "Acme Fitness Store" \
@@ -16,7 +23,9 @@ az spring gateway update \
     --no-wait
 ```
 
-### Create  routing rules for the applications:
+### 1.1. Create  routing rules for the applications:
+
+Routing rules bind endpoints in the request to the backend applications. For example in the Cart route below, the routing rule indicates any requests to /cart/** endpoint gets routed to backend Cart App.
 
 ```shell
 az spring gateway route-config create \
@@ -58,9 +67,9 @@ You should see the ACME Fitness Store Application:
 ![An image of the ACME Fitness Store Application homepage](media/homepage.png)
 
 Explore the application, but notice that not everything is functioning yet. Continue on to
-Unit 2 to configure Single Sign On to enable the rest of the functionality.
+next section to configure Single Sign On to enable the rest of the functionality.
 
-### Explore the API using API Portal
+## 2. Explore the API using API Portal
 
 Assign an endpoint to API Portal and open it in a browser:
 
@@ -76,3 +85,7 @@ If using Azure Cloud Shell or Windows, open the output from the following comman
 ```shell
 echo "https://${PORTAL_URL}"
 ```
+
+⬅️ Previous guide: [08 - Hands On Lab 2 - Deploy Acme Fitness](../08-hol-2-deploy-acme-fitness/README.md)
+
+➡️ Next guide: [10 - Hands On Lab 3 - Configure Single Signon](../10-hol-4-configure-single-signon/README.md)
