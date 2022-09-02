@@ -6,16 +6,16 @@ By default, several services use in-memory data storage. This unit will create p
 Create a bash script with environment variables by making a copy of the supplied template:
 
 ```shell
-cp ./azure/setup-db-env-variables-template.sh ./azure/setup-db-env-variables.sh
+cp ../scripts/setup-db-env-variables-template.sh ../scripts/setup-db-env-variables.sh
 ```
 
-Open `./azure/setup-db-env-variables.sh` and enter the following information:
+Open `../scripts/setup-db-env-variables.sh` and enter the following information:
 
 ```shell
-export AZURE_CACHE_NAME=change-me                   # Unique name for Azure Cache for Redis Instance
-export POSTGRES_SERVER=change-me                    # Unique name for Azure Database for PostgreSQL Flexible Server
-export POSTGRES_SERVER_USER=change-name             # Postgres server username to be created in next steps
-export POSTGRES_SERVER_PASSWORD=change-name         # Postgres server password to be created in next steps
+export AZURE_CACHE_NAME=<subscription-name>-redis                   # Unique name for Azure Cache for Redis Instance. This needs to be the value that was specified in the arm template as part of[workshop-environment-setup](../03-workshop-environment-setup/README.md)
+export POSTGRES_SERVER=<subscription-name>-db                   # Unique name for Azure Database for PostgreSQL Flexible Server
+export POSTGRES_SERVER_USER=admin             # Postgres server username to be created in next steps
+export POSTGRES_SERVER_PASSWORD=<default secret mentioned in Section 3>         # Postgres server password to be created in next steps
 ```
 
 > Note: AZURE_CACHE_NAME and POSTGRES_SERVER must be unique names to avoid DNS conflicts
@@ -26,32 +26,6 @@ Then, set the environment:
 source ./azure/setup-db-env-variables.sh
 ```
 
-### Create Azure Cache for Redis
-
-Create an instance of Azure Cache for Redis using the Azure CLI.
-
-```shell
-az redis create \
-  --name ${AZURE_CACHE_NAME} \
-  --location ${REGION} \
-  --resource-group ${RESOURCE_GROUP} \
-  --sku Basic \
-  --vm-size c0
-```
-
-> Note: The redis cache will take around 15-20 minutes to deploy.
-
-### Create an Azure Database for Postgres
-
-Using the Azure CLI, create an Azure Database for PostgreSQL Flexible Server:
-
-```shell
-az postgres flexible-server create --name ${POSTGRES_SERVER} \
-    --resource-group ${RESOURCE_GROUP} \
-    --location ${REGION} \
-    --admin-user ${POSTGRES_SERVER_USER} \
-    --admin-password ${POSTGRES_SERVER_PASSWORD} \
-    --yes
 
 # Allow connections from other Azure Services
 az postgres flexible-server firewall-rule create --rule-name allAzureIPs \
@@ -65,8 +39,6 @@ az postgres flexible-server parameter set \
     --server-name ${POSTGRES_SERVER} \
     --name azure.extensions --value uuid-ossp
 ```
-
-> Note: The PostgreSQL Flexible Server will take 5-10 minutes to deploy
 
 Create a database for the order service:
 
@@ -201,3 +173,8 @@ az spring app restart --name ${ORDER_SERVICE_APP}
 ```
 
 After restarting, revisit the URL for your placed orders and notice that they persisted. 
+
+
+⬅️ Previous guide: [10 - Hands On Lab 4 - Configure Single Sign On](../10-hol-4-configure-single-signon/README.md)
+
+➡️ Next guide: [12 - Secrets Handling with Azure Key Vault](../12-hol-6-secrets-handling-with-azure-keyvault/README.md)
