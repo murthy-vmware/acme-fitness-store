@@ -1,8 +1,5 @@
 By default, several services use in-memory data storage. This unit will create persistent stores outside the applications and connect applications to those stores.
 
-Prerequisites:
-
-* Completion of [Unit 1 - Deploy and Build Applications](#unit-1---deploy-and-build-applications)
 
 ### Prepare your environment
 
