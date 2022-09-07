@@ -158,7 +158,9 @@
     "variables": {
         "resourceGroupName": "[concat(parameters('projectName'), '-rg')]",
         "dbName": "[concat(parameters('projectName'), '-db')]",
-        "keyVaultName": "[concat(parameters('projectName'), '-kv')]"
+        "keyVaultName": "[concat(parameters('projectName'), '-kv')]",
+        "logAnalyticsWorkspaceName": "[concat(parameters('projectName'),'-la')]",
+        "opInsightsWorkspaceName": "[concat(parameters('projectName'),'-insights')]"
     },
     "resources": [
         {
@@ -225,35 +227,60 @@
                             }
                         },
                         {
-                            "type": "Microsoft.DBforPostgreSQL/flexibleServers",
-                            "apiVersion": "2021-06-01",
-                            "name": "[variables('dbName')]",
+                            "type": "Microsoft.OperationalInsights/workspaces",
+                            "apiVersion": "2015-11-01-preview",
+                            "name": "[variables('logAnalyticsWorkspaceName')]",
                             "location": "[parameters('location')]",
-                            "sku": {
-                                "name": "[parameters('dbInstanceType')]",
-                                "tier": "[parameters('serverEdition')]"
-                            },
                             "properties": {
-                                "version": "[parameters('version')]",
-                                "administratorLogin": "[parameters('administratorLogin')]",
-                                "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
-                                "network": {
-                                    "delegatedSubnetResourceId": "[if(empty(parameters('virtualNetworkExternalId')), json('null'), json(format('{0}/subnets/{1}', parameters('virtualNetworkExternalId'), parameters('subnetName'))))]",
-                                    "privateDnsZoneArmResourceId": "[if(empty(parameters('virtualNetworkExternalId')), json('null'), parameters('privateDnsZoneArmResourceId'))]"
+                                "sku": {
+                                    "name": "PerGB2018"
                                 },
-                                "highAvailability": {
-                                    "mode": "[parameters('haMode')]"
-                                },
-                                "storage": {
-                                    "storageSizeGB": "[parameters('skuSizeGB')]"
-                                },
-                                "backup": {
-                                    "backupRetentionDays": 7,
-                                    "geoRedundantBackup": "Disabled"
-                                },
-                                "availabilityZone": "[parameters('availabilityZone')]"
+                                "retentionInDays": 30
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Insights/components",
+                            "apiVersion": "2020-02-02",
+                            "name": "[variables('opInsightsWorkspaceName')]",
+                            "location": "[parameters('location')]",
+                            "kind": "other",
+                            "properties": {
+                                "Application_Type": "Web",
+                                "Flow_Type": "Bluefield",
+                                "Request_Source": "rest"
                             }
                         }
+                        // {
+                        //     "type": "Microsoft.DBforPostgreSQL/flexibleServers",
+                        //     "apiVersion": "2021-06-01",
+                        //     "name": "[variables('dbName')]",
+                        //     "location": "[parameters('location')]",
+                        //     "sku": {
+                        //         "name": "[parameters('dbInstanceType')]",
+                        //         "tier": "[parameters('serverEdition')]"
+                        //     },
+                        //     "properties": {
+                        //         "version": "[parameters('version')]",
+                        //         "administratorLogin": "[parameters('administratorLogin')]",
+                        //         "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+                        //         "network": {
+                        //             "delegatedSubnetResourceId": "[if(empty(parameters('virtualNetworkExternalId')), json('null'), json(format('{0}/subnets/{1}', parameters('virtualNetworkExternalId'), parameters('subnetName'))))]",
+                        //             "privateDnsZoneArmResourceId": "[if(empty(parameters('virtualNetworkExternalId')), json('null'), parameters('privateDnsZoneArmResourceId'))]"
+                        //         },
+                        //         "highAvailability": {
+                        //             "mode": "[parameters('haMode')]"
+                        //         },
+                        //         "storage": {
+                        //             "storageSizeGB": "[parameters('skuSizeGB')]"
+                        //         },
+                        //         "backup": {
+                        //             "backupRetentionDays": 7,
+                        //             "geoRedundantBackup": "Disabled"
+                        //         },
+                        //         "availabilityZone": "[parameters('availabilityZone')]"
+                        //     }
+                        // }
+
                     ]
                 }
             }
