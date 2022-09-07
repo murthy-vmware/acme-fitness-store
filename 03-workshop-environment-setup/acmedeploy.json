@@ -211,11 +211,11 @@
     },
     "variables": {
         "resourceGroupName": "[concat(parameters('projectName'), '-rg')]",
-        "dbName": "[concat(parameters('projectName'), '-db', substring(uniqueString(subscription().id),0,4))]",
-        "cacheName": "[concat(parameters('projectName'), '-cache', substring(uniqueString(subscription().id),0,4))]",
-        "keyVaultName": "[concat(parameters('projectName'), '-kv', substring(uniqueString(subscription().id),0,4))]",
-        "logAnalyticsWorkspaceName": "[concat(parameters('projectName'),'-la')]",
-        "opInsightsWorkspaceName": "[concat(parameters('projectName'),'-insights')]"
+        "dbName": "[concat(parameters('projectName'), '-db-', substring(uniqueString(subscription().id),0,4))]",
+        "cacheName": "[concat(parameters('projectName'), '-cache-', substring(uniqueString(subscription().id),0,4))]",
+        "keyVaultName": "[concat(parameters('projectName'), '-kv-', substring(uniqueString(subscription().id),0,4))]",
+        "logAnalyticsWorkspaceName": "[concat(parameters('projectName'),'-la-',substring(uniqueString(subscription().id),0,4))]",
+        "opInsightsWorkspaceName": "[concat(parameters('projectName'),'-insights-',substring(uniqueString(subscription().id),0,4))]"
     },
     "resources": [
         {
