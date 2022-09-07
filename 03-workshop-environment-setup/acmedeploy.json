@@ -319,30 +319,8 @@
                                     "name": "[parameters('redisCacheSKU')]"
                                 }
                             }
-                        },
-                        {
-                            "type": "Microsoft.Insights/diagnosticSettings",
-                            "apiVersion": "2021-05-01-preview",
-                            "scope": "[format('Microsoft.Cache/redis/{0}', variables('cacheName'))]",
-                            "name": "[variables('cacheName')]",
-                            "properties": {
-                                "storageAccountId": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('existingDiagnosticsStorageAccountResourceGroup')), 'Microsoft.Storage/storageAccounts', parameters('existingDiagnosticsStorageAccountName'))]",
-                                "metrics": [
-                                    {
-                                        "timeGrain": "AllMetrics",
-                                        "enabled": "[parameters('diagnosticsEnabled')]",
-                                        "retentionPolicy": {
-                                            "days": 90,
-                                            "enabled": "[parameters('diagnosticsEnabled')]"
-                                        }
-                                    }
-                                ]
-                            },
-                            "dependsOn": [
-                                "[resourceId('Microsoft.Cache/redis', variables('cacheName'))]"
-                            ]
                         }
-                        // {
+                       // {
                         //     "type": "Microsoft.DBforPostgreSQL/flexibleServers",
                         //     "apiVersion": "2021-06-01",
                         //     "name": "[variables('dbName')]",
