@@ -330,8 +330,8 @@
                         {
                             "type": "Microsoft.Insights/diagnosticSettings",
                             "apiVersion": "2021-05-01-preview",
-                            "scope": "[format('Microsoft.Cache/redis/{0}', parameters('redisCacheName'))]",
-                            "name": "[parameters('redisCacheName')]",
+                            "scope": "[format('Microsoft.Cache/redis/{0}', variables('cacheName'))]",
+                            "name": "[variables('cacheName')]",
                             "properties": {
                                 "storageAccountId": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('existingDiagnosticsStorageAccountResourceGroup')), 'Microsoft.Storage/storageAccounts', parameters('existingDiagnosticsStorageAccountName'))]",
                                 "metrics": [
@@ -346,7 +346,7 @@
                                 ]
                             },
                             "dependsOn": [
-                                "[resourceId('Microsoft.Cache/redis', parameters('redisCacheName'))]"
+                                "[resourceId('Microsoft.Cache/redis', variables('cacheName'))]"
                             ]
                         }
                         // {
