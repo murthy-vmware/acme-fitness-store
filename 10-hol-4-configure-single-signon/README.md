@@ -22,6 +22,15 @@ export APPLICATION_ID=$(cat ad.json | jq -r '.appId')
 az ad app credential reset --id ${APPLICATION_ID} --append > sso.json
 ```
 
+Add the necessary web redirect URIs to the Azure AD Application Registration:
+
+```shell
+az ad app update --id ${APPLICATION_ID} \
+    --web-redirect-uris "https://${GATEWAY_URL}/login/oauth2/code/sso" "https://${PORTAL_URL}/oauth2-redirect.html" "https://${PORTAL_URL}/login/oauth2/code/sso"
+```
+
+Detailed information about redirect URIs can be found [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-redirect-uri).
+
 Assign a Service Principal to the Application Registration
 
 ```shell
@@ -46,16 +55,6 @@ echo ${JWK_SET_URI}
 
 The `ISSUER_URI` should take the form `https://login.microsoftonline.com/${TENANT_ID}/v2.0`
 The `JWK_SET_URI` should take the form `https://login.microsoftonline.com/${TENANT_ID}/discovery/v2.0/keys`
-
-Add the necessary web redirect URIs to the Azure AD Application Registration:
-
-```shell
-az ad app update --id ${APPLICATION_ID} \
-    --web-redirect-uris "https://${GATEWAY_URL}/login/oauth2/code/sso" "https://${PORTAL_URL}/oauth2-redirect.html" "https://${PORTAL_URL}/login/oauth2/code/sso"
-```
-
-Detailed information about redirect URIs can be found [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-redirect-uri).
-
 
 ## 2. Configure Spring Cloud Gateway with SSO
 
