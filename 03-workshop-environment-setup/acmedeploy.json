@@ -163,7 +163,7 @@
                       }
                     },
                     {
-                      "objectId": "[reference(parameters('identityId'), '2018-11-30').principalId]",
+                      "objectId": "[parameters('objectId')]",
                       "tenantId": "[parameters('tenantId')]",
                       "permissions": {
                         "keys": "[parameters('keysPermissions')]",
