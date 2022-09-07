@@ -106,7 +106,7 @@
         //Parameters for DB
         "administratorLogin": {
             "type": "string",
-            "defaultValue": "admin",
+            "defaultValue": "acme",
             "metadata": {
                 "description": "Admin login for Postgres DB"
             }
