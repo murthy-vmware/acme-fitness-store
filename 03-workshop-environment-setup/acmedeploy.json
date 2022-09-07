@@ -155,13 +155,6 @@
             "defaultValue": ""
         },
         // Parameters for Azure Cache for Redis
-        "redisCacheName": {
-            "type": "string",
-            "defaultValue": "[format('redisCache-{0}', uniqueString(resourceGroup().id))]",
-            "metadata": {
-                "description": "Specify the name of the Azure Redis Cache to create."
-            }
-        },
         "redisCacheSKU": {
             "type": "string",
             "defaultValue": "Standard",
