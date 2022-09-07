@@ -12,7 +12,7 @@ This workshop leverages Github Codespaces to provide a development environment f
 3. Assuming the above steps are succesful, you should be able to open a terminal inside VS Code that opens up in Codespaces. Refer to this link to understand more about [Codespaces](https://github.com/CodeSpaces). This Codespace comes installed with the following software:
    1. * [JDK 17](https://docs.microsoft.com/java/openjdk/download?WT.mc_id=azurespringcloud-github-judubois#openjdk-17)
    2. * The environment variable `JAVA_HOME` should be set to the path of the JDK installation. The directory specified by this path should have `bin`, `jre`, and `lib` among its subdirectories. Further, ensure your `PATH` variable contains the directory `${JAVA_HOME}/bin`. To test, type `which javac` into bash shell ensure the resulting path points to a file inside `${JAVA_HOME}/bin`.
-   3. * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest&WT.mc_id=azurespringcloud-github-judubois) version 2.31.0 or later. You can check the version of your current Azure CLI installation by running:
+   3. * [Azure CLI version 2.31.0 or higher](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest) version 2.31.0 or later. You can check the version of your current Azure CLI installation by running:
 
     ```bash
     az --version
@@ -20,28 +20,38 @@ This workshop leverages Github Codespaces to provide a development environment f
 
 ### Create Azure Resources using ARM template
 
-As we had already noted in the prior sections and also as we go to next sections, there are resources that need to be in place to execute this workshop. As the goal of this workshop is to focus more on the app/service related tasks and less on the underlying infrastructre tasks, we are providing an Azure ARM template that will provision the required reources.
+As we had already noted in the prior sections and also as we go to next sections, there are quite a few number of resources that need to be in place to execute this workshop. As the goal of this workshop is to focus more on the app/service related tasks and less on the underlying infrastructre tasks, we are providing an Azure ARM template that will provision the required reources.
 
  - Resource Group
  - Azure Cache for Redis
  - Azure SQL for Postgres
- - Azure Active Directory App Registered
  - Azure Key Vault
  - Log Analytics workspace
  - Application Insights workspace
+ - Azure Active Directory App Registered
+ 
 
 Please right click on the below button and choose the Open in new tab option. The reason is there are quite a number of fields that need to be populated in that form and we are providing guidance on the values to populate with.
 
 [![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2fworkshop%2f03-workshop-environment-setup%2facmedeploy.json)
 
 
-To know about the description of the fields, click on the little info icon next to every field. For the fields where default value is populated, the recommendation is to use the default for the first time use. 
+To know about the description of the fields, click on the little info icon next to every field. For the fields where default value is populated, the recommendation is to use the default for the first time use. The only field that needs to be popluated in here is the ``ObjectId``. To get the value for this field, perform the below steps
 
-<!-- [![Deploy to Azure](images/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmurthy-vmware%2facme-fitness-store%2fworkshop%2f03-workshop-environment-setup%2farm-rg.json) -->
+** In Services tab, search for Azure Active Directory
+** On the left side, find ``Users`` link and click on that.
+** In the search bar, search for your name and click on your name
+** Copy the Object ID from the list of properties 
 
-The above deployment takes a while (15-20 mins) to complete. You do not have to wait for this step to complete. You can go ahead with the steps in next section. However it will be useful to check the completion of this step using the below command(s)
+Once you copied the value for Object ID, paste this in the arm template value for Object ID field.
 
-// TODO To be filled (Murthy)
+Click Save go to next screen. Click Create on next screen
+
+The above deployment takes a while (25-30 mins) to complete. You do not have to wait for this step to complete. You can go ahead with the steps in next section. However it will be useful to check the completion of this step using the below command(s)
+
+After successful completion of this step verify that the resource group and all the relevant resources are created in the resource group. Navigate to Home button in Azure portal, click on your subscription and on the left click on "Resource Groups" link. If you left all the default values in the ARM template, this page should look like the screenshot below
+
+[Resource Group](images/arm-resourcegroup.png)
 
 
 ## Install the Azure CLI extension
@@ -54,7 +64,7 @@ Install the Azure Spring Apps extension for the Azure CLI using the following co
 az extension add --name spring
 ```
 
-Note - `spring-cloud` CLI extension `3.0.0` or later is a pre-requisite to enable the
+Note - `spring` CLI extension `1.1.5` or later is a pre-requisite to enable the
 latest Enterprise tier functionality to configure VMware Tanzu Components. Use the following
 command to remove previous versions and install the latest Enterprise tier extension:
 
@@ -63,7 +73,7 @@ az extension remove --name spring-cloud
 az extension add --name spring
 ```
 
-If `spring-cloud`'s version still < `3.0.0` after above commands, you can try to [re-install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli). 
+If `spring`'s version still < `1.1.5` after above commands, you can try to [re-install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli). 
 
 ### Prepare your environment for deployments
 
@@ -77,10 +87,10 @@ Open `../scripts/setup-env-variables.sh` and enter the following information:
 
 ```shell
 export SUBSCRIPTION=subscription-id                 # replace it with your subscription-id
-export RESOURCE_GROUP=resource-group-name           # update with the value that was provided at the step of running ARM template
-export SPRING_APPS_SERVICE=azure-spring-apps-name   # name of the service that will be created in the next steps
-export LOG_ANALYTICS_WORKSPACE=log-analytics-name   # existing workspace or one that will be created in next steps
-export REGION=region-name                           # choose a region with Enterprise tier support
+export RESOURCE_GROUP=acme-fitness-rg          # update with the value that was provided at the step of running ARM template
+export SPRING_APPS_SERVICE=acme-fitness   # name of the service that will be created in the next steps
+export LOG_ANALYTICS_WORKSPACE=acme-fitness-la   # existing workspace or one that will be created in next steps
+export REGION=eastus                           # choose a region with Enterprise tier support
 ```
 
 The REGION value should be one of available regions for Azure Spring Apps (e.g. eastus). Please visit [here](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=spring-apps&regions=all) for all available regions for Azure Spring Apps.
@@ -112,9 +122,7 @@ az term accept --publisher vmware-inc --product azure-spring-cloud-vmware-tanzu-
 
 If you completed all the steps till here, you have successfully created/installed the following resources
 * Accessing a dev environment via Github Codespaces
-* All the dependent resources required for the workshop are installed via an arm template. Run the below command once to make sure all the required resources are up and running. Please refer to this screenshot as a reference to verify the completion.
-
-//TODO Murthy to fill in content here.
+* All the dependent resources required for the workshop are installed via an arm template.
 
 Previous guide: [02 - ASA-E Introduction](../02-asa-e-introduction/README.md)
 

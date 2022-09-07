@@ -60,8 +60,7 @@ az postgres flexible-server db create \
 
 ### Create Service Connectors
 
-The Order Service and Catalog Service use Azure Database for Postgres, create Service Connectors
-for those applications:
+The Order Service and Catalog Service use Azure Database for Postgres, create Service Connectors for those applications:
 
 ```shell
 # Bind order service to Postgres
