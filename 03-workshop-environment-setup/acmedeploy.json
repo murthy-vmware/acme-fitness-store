@@ -91,12 +91,6 @@
           "description": "Specifies whether the key vault is a standard vault or a premium vault."
         }
       },
-      "identityId": {
-        "type": "string",
-        "metadata": {
-          "description": "Specifies the ID of the user-assigned managed identity."
-        }
-      },
       "certificatesPermissions": {
         "type": "array",
         "defaultValue": [
