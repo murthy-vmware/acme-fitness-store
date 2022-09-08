@@ -1,6 +1,7 @@
 In the previous section we deployed a simple hello-world service to asa-e instance. In this section we are going to deploy the more sophisticated acme-fitness application to the same asa-e instance. 
 
-This [diagram](images/just-services.jpg) shows the final result once this section is complete.
+This diagram below shows the final result once this section is complete:
+![diagram](images/just-services.png)
 
 Below are the diffrent steps that we configure/create to successfully deploy the services/apps
 - [1. Create applications in Azure Spring Apps](#1-create-applications-in-azure-spring-apps)

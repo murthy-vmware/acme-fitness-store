@@ -1,6 +1,6 @@
 This section discusses the demo application that we will be using in this workshop to demonstrate the different features of ASA-E.
 
-![An image showing the services involved in the ACME Fitness Store. It depicts the applications and their dependencies on different ASA-E services](images/architecture.jpg)
+![An image showing the services involved in the ACME Fitness Store. It depicts the applications and their dependencies on different ASA-E services](images/end-end-arch.jpg)
 
 This application is composed of several services:
 

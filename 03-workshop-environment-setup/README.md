@@ -52,8 +52,35 @@ After successful completion of this step verify that the resource group and all 
 
 [Resource Group](images/arm-resourcegroup.png)
 
+### Prepare your environment for deployments
 
-## Install the Azure CLI spring extension
+This step should be completed only after the successful completion of the above step.As the above step takes 25-30 minutes to complete, please make sure you revisit this section and complete these instructions.
+
+Create a bash script with environment variables by making a copy of the supplied template:
+
+From the root directory of the repo
+```shell
+cp ./scripts/setup-env-variables-template.sh ./scripts/setup-env-variables.sh
+```
+
+Open `./scripts/setup-env-variables.sh` and update the following variables:
+
+```shell
+export SUBSCRIPTION=CHANGE-ME                 # replace it with your subscription-id
+export LOG_ANALYTICS_WORKSPACE=acme-fitness-la-CHANGE-ME   # By replacing CHANGE-ME with the last 4 characters you see in Log Analytics workspace name in Azure portal.
+```
+
+- To get the Subscription ID, go to Azure portal, in search bar type subscriptions. The results should display your subscription and its id.
+
+This env file comes with default values that were provided as part of arm template. It is recommended to leave the values as-is for the purpose of this workshop. If for any reason you updated these default values in the arm template, those values need to be entereted in here.
+
+Now, set the environment:
+
+```shell
+source ./scripts/setup-env-variables.sh
+```
+
+### Install the Azure CLI spring extension
 
 Alright, now that you triggered the task to create the dependent services/resources we will go ahead with the next steps of installing azure cli in our Codespace. While there is an option to use Azure Portal to create the required resources, for the purposes of this workshop we use azure cli. 
 
@@ -73,32 +100,6 @@ az extension add --name spring
 ```
 
 If `spring`'s version still < `1.1.5` after above commands, you can try to [re-install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli). 
-
-### Prepare your environment for deployments
-
-Create a bash script with environment variables by making a copy of the supplied template:
-
-```shell
-cp ../scripts/setup-env-variables-template.sh ../scripts/setup-env-variables.sh
-```
-
-Open `../scripts/setup-env-variables.sh` and enter the following information:
-
-```shell
-export SUBSCRIPTION=subscription-id                 # replace it with your subscription-id
-export RESOURCE_GROUP=acme-fitness-rg          # update with the value that was provided at the step of running ARM template
-export SPRING_APPS_SERVICE=acme-fitness   # name of the service that will be created in the next steps
-export LOG_ANALYTICS_WORKSPACE=acme-fitness-la-XXXX   # By replacing CHANGE-ME with the last 4 characters you see in Log Analytics workspace name
-export REGION=eastus                           # choose a region with Enterprise tier support
-```
-
-The REGION value should be one of available regions for Azure Spring Apps (e.g. eastus). Please visit [here](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=spring-apps&regions=all) for all available regions for Azure Spring Apps.
-
-Then, set the environment:
-
-```shell
-source ../scripts/setup-env-variables.sh
-```
 
 ### Login to Azure
 
@@ -122,6 +123,7 @@ az term accept --publisher vmware-inc --product azure-spring-cloud-vmware-tanzu-
 If you completed all the steps till here, you have successfully created/installed the following resources
 * Accessing a dev environment via Github Codespaces
 * All the dependent resources required for the workshop are installed via an arm template.
+* Required az cli extensions are added and default subscription is set
 
 Previous guide: [02 - ASA-E Introduction](../02-asa-e-introduction/README.md)
 

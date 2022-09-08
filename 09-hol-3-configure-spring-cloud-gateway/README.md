@@ -1,10 +1,11 @@
 In this section we are going to create a spring cloud gateway instance for acme-fitness and connect all the backend services to this gateway instance. This way the gateway instance acts as the proxy for any requests that are targeted towards the acme-fitness application.
 
-Once this section is complete, the [architecture](images/acme-fitness-with-scg.jpg) looks as below
+Once this section is complete, the architecture looks as below:
+![architecture](images/services-scg.png) 
 
 ## 1. Configure Spring Cloud Gateway
 
-Assign an endpoint and update the Spring Cloud Gateway configuration with API
+Assign a public endpoint and update the Spring Cloud Gateway configuration with API
 information:
 
 ```shell
@@ -63,8 +64,6 @@ echo "https://${GATEWAY_URL}"
 ```
 
 You should see the ACME Fitness Store Application:
-
-![An image of the ACME Fitness Store Application homepage](media/homepage.png)
 
 Explore the application, but notice that not everything is functioning yet. Continue on to
 next section to configure Single Sign On to enable the rest of the functionality.
