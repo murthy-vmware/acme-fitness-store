@@ -1,1 +1,1 @@
-export KEY_VAULT=change-me      # customize this
+export KEY_VAULT=acme-fitness-kv-CHANGE-ME     # customize this

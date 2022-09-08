@@ -1,4 +1,4 @@
-In the previous section you created an empty azure spring apps instance. In this section we will try to deploy a very simple hello-world spring boot app to get a high level understanding of how to deploy an app and access it. 
+In the previous section you created an empty azure spring apps instance. In this section we will try to deploy a very simple hello-world spring boot app to get a high level understanding of how to deploy an asa-e app and access it. 
 
 ---
 
@@ -9,7 +9,7 @@ A typical way to create Spring Boot applications is to use the Spring Initialize
 
 >💡 __Note:__ All subsequent commands in this workshop should be run from the same directory, except where otherwise indicated via `cd` commands.
 
-In an __empty__ directory execute the curl command line below:
+In the same directory as this README execute the curl command line below:
 
 ```bash
 curl https://start.spring.io/starter.tgz -d dependencies=web -d baseDir=hello-world -d bootVersion=2.7.0 -d javaVersion=17 | tar -xzvf -

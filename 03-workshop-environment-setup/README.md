@@ -28,7 +28,6 @@ As we had already noted in the prior sections and also as we go to next sections
  - Azure Key Vault
  - Log Analytics workspace
  - Application Insights workspace
- - Azure Active Directory App Registered
  
 
 Please right click on the below button and choose the Open in new tab option. The reason is there are quite a number of fields that need to be populated in that form and we are providing guidance on the values to populate with.
@@ -54,7 +53,7 @@ After successful completion of this step verify that the resource group and all 
 [Resource Group](images/arm-resourcegroup.png)
 
 
-## Install the Azure CLI extension
+## Install the Azure CLI spring extension
 
 Alright, now that you triggered the task to create the dependent services/resources we will go ahead with the next steps of installing azure cli in our Codespace. While there is an option to use Azure Portal to create the required resources, for the purposes of this workshop we use azure cli. 
 
@@ -89,7 +88,7 @@ Open `../scripts/setup-env-variables.sh` and enter the following information:
 export SUBSCRIPTION=subscription-id                 # replace it with your subscription-id
 export RESOURCE_GROUP=acme-fitness-rg          # update with the value that was provided at the step of running ARM template
 export SPRING_APPS_SERVICE=acme-fitness   # name of the service that will be created in the next steps
-export LOG_ANALYTICS_WORKSPACE=acme-fitness-la   # existing workspace or one that will be created in next steps
+export LOG_ANALYTICS_WORKSPACE=acme-fitness-la-XXXX   # By replacing CHANGE-ME with the last 4 characters you see in Log Analytics workspace name
 export REGION=eastus                           # choose a region with Enterprise tier support
 ```
 
