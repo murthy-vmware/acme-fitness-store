@@ -5,7 +5,7 @@ In this section we are going to create an ASA-E instance using azure cli.
 
 Prepare a name for your Azure Spring Apps service.  The name must be between 4 and 32 characters long and can contain only lowercase letters, numbers, and hyphens.  The first character of the service name must be a letter and the last character must be either a letter or a number. 
 
-This name is stored as an environment variable, SPRING_APPS_SERVICE in ```../scripts/setup-env-variables.sh```. It is defaulted to acme-fitness. It is recommended to leave the default value for this workshop purpose. 
+This name is stored as an environment variable, SPRING_APPS_SERVICE in ```./scripts/setup-env-variables.sh```. It is defaulted to acme-fitness. It is recommended to leave the default value for this workshop purpose. 
 
 ### Create an instance of Azure Spring Apps Enterprise.
 

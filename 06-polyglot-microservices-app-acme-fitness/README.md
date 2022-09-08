@@ -1,6 +1,7 @@
 This section discusses the demo application that we will be using in this workshop to demonstrate the different features of ASA-E.
 
-![An image showing the services involved in the ACME Fitness Store. It depicts the applications and their dependencies on different ASA-E services](images/end-end-arch.jpg)
+Below image shows the services involved in the ACME Fitness Store. It depicts the applications and their dependencies on different ASA-E services. We will be implementing this architecture by the end of this workshop.
+![acme-fitness](images/end-end-arch.png)
 
 This application is composed of several services:
 
@@ -24,7 +25,6 @@ As you see from the above overview, in addition to the above services there are 
  - Azure Active Directory
  - Azure Postgres 
  - Azure Cache for Redis
- - Azure Active Directory
  - Azure Key Vault
  - Azure services for Monitoring and Logging
 
