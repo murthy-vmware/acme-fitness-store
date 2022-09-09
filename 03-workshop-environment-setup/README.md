@@ -91,12 +91,7 @@ az extension add --name spring
 ```
 
 Note - `spring` CLI extension `1.1.5` or later is a pre-requisite to enable the
-latest Enterprise tier functionality to configure VMware Tanzu Components. Use the following
-command to remove previous versions and install the latest Enterprise tier extension:
-
-```shell
-az extension remove --name spring-cloud
-az extension add --name spring
+latest Enterprise tier functionality to configure VMware Tanzu Components.
 ```
 
 If `spring`'s version still < `1.1.5` after above commands, you can try to [re-install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli). 
@@ -106,7 +101,7 @@ If `spring`'s version still < `1.1.5` after above commands, you can try to [re-i
 Login to the Azure CLI and choose your active subscription. In the terminal of VS Code in Codespace, run the below commands
 
 ```shell
-az login
+az login --use-device-code
 az account list -o table
 az account set --subscription ${SUBSCRIPTION}
 ```
@@ -125,6 +120,6 @@ If you completed all the steps till here, you have successfully created/installe
 * All the dependent resources required for the workshop are installed via an arm template.
 * Required az cli extensions are added and default subscription is set
 
-Previous guide: [02 - ASA-E Introduction](../02-asa-e-introduction/README.md)
+⬅️ Previous guide: [02 - ASA-E Introduction](../02-asa-e-introduction/README.md)
 
 ➡️ Next guide: [04 - Create ASA-E instance](../04-create-asa-e-instance/README.md)

@@ -2,11 +2,12 @@
 
 ### Logistics
 
-* (Check with Asir) To start the workshop, you need to have an Azure account with active subscription. If this is not provided by your company, please sign-up for a free Azure account which gives you 200$ worth of free credit per month.
-  
-* https://www.microsoftazurepass.com/
+* To start the workshop, you need to have an Azure account with active subscription. If this is not provided by your company, please sign-up for a free Azure account which gives you 100$ worth of free credit per month. Free account can be created by visiting [azure account](https://www.microsoftazurepass.com/)
 
-//TODO Add instructions around promo code
+As part of the workshop you will be provided a Promo Code which gives 100$ worth of free credits. Please make sure you enter the Promo Code when you sign up for the new Azure account.
+
+Once the account is created, please forward your subscription id to the workshop moderator. They will ensure the background processing is completed for you to go ahead and start using the subscription.
+  
 
 ### Workshop Agenda
 [Agenda](Agenda.md)
