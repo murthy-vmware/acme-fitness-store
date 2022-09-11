@@ -1,5 +1,8 @@
 In this Unit, you will configure Single Sign-On for Spring Cloud Gateway using Azure Active Directory or an existing Identity Provider.
 
+Once this section is complete, the architecture looks as below:
+![architecture](images/scg-sso.png) 
+
 ## 1. Register Application with Azure AD
 
 Choose a unique display name for your Application Registration.
