@@ -1,5 +1,7 @@
 By default, several services use in-memory data storage. This unit will create persistent stores outside the applications and connect applications to those stores.
 
+Once this section is complete, the architecture looks as below:
+![architecture](images/postgres-redis.png) 
 
 ### Prepare your environment
 

@@ -1,5 +1,8 @@
 In this unit, you will use Azure Key Vault to securely store and load secrets to connect to Azure services.
 
+Once this section is complete, the architecture looks as below:
+![architecture](images/key-vault.png) 
+
 ### Create Azure Key Vault and store secrets
 
 Choose a unique name for your Key Vault and set an environment variable:
