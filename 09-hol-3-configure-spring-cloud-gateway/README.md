@@ -62,12 +62,6 @@ Retrieve the URL for Spring Cloud Gateway and open it in a browser:
 open "https://${GATEWAY_URL}"
 ```
 
-If using Azure Cloud Shell or Windows, open the output from the following command in a browser:
-
-```shell
-echo "https://${GATEWAY_URL}"
-```
-
 You should see the ACME Fitness Store Application:
 
 Explore the application, but notice that not everything is functioning yet. Continue on to
@@ -82,12 +76,6 @@ az spring api-portal update --assign-endpoint true
 export PORTAL_URL=$(az spring api-portal show | jq -r '.properties.url')
 
 open "https://${PORTAL_URL}"
-```
-
-If using Azure Cloud Shell or Windows, open the output from the following command in a browser:
-
-```shell
-echo "https://${PORTAL_URL}"
 ```
 
 ⬅️ Previous guide: [08 - Hands On Lab 2 - Deploy Acme Fitness](../08-hol-2-deploy-acme-fitness/README.md)

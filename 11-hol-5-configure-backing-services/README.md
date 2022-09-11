@@ -14,22 +14,19 @@ cp ../scripts/setup-db-env-variables-template.sh ../scripts/setup-db-env-variabl
 Open `../scripts/setup-db-env-variables.sh` and enter the following information:
 
 ```shell
-export AZURE_CACHE_NAME=<subscription-name>-redis                   # Unique name for Azure Cache for Redis Instance. This needs to be the value that was specified in the arm template as part of[workshop-environment-setup](../03-workshop-environment-setup/README.md)
-export POSTGRES_SERVER=<subscription-name>-db                   # Unique name for Azure Database for PostgreSQL Flexible Server
-export POSTGRES_SERVER_USER=admin             # Postgres server username to be created in next steps
-export POSTGRES_SERVER_PASSWORD=<default secret mentioned in Section 3>         # Postgres server password to be created in next steps
+export AZURE_CACHE_NAME=acme-fitness-cache-CHANGE-ME                 #Unique name for Azure Cache for Redis Instance. Replace CHANGE_ME with the 4 unique characters that were created as part of ARM template in Section 3. [workshop-environment-setup](../03-workshop-environment-setup/README.md)
+export POSTGRES_SERVER=<subscription-name>-db                   # Unique name for Azure Database for PostgreSQL Flexible Server. Replace CHANGE_ME with the 4 unique characters that were created as part of ARM template in Section 3.
 ```
-
-> Note: AZURE_CACHE_NAME and POSTGRES_SERVER must be unique names to avoid DNS conflicts
 
 Then, set the environment:
 
 ```shell
-source ./azure/setup-db-env-variables.sh
+source ../scripts/setup-db-env-variables.sh
 ```
 
 
 # Allow connections from other Azure Services
+```shell
 az postgres flexible-server firewall-rule create --rule-name allAzureIPs \
      --name ${POSTGRES_SERVER} \
      --resource-group ${RESOURCE_GROUP} \

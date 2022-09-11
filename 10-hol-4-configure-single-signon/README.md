@@ -72,7 +72,47 @@ az spring gateway update \
     --no-wait
 ```
 
-### 2.1. Update Existing Applications
+### 2.1. Deploy the Identity Service Application
+
+Create the identity service application
+
+```shell
+az spring app create --name ${IDENTITY_SERVICE_APP} --instance-count 1 --memory 1Gi
+```
+
+Bind the identity service to Application Configuration Service
+
+```shell
+az spring application-configuration-service bind --app ${IDENTITY_SERVICE_APP}
+```
+
+Bind the identity service to Service Registry.
+
+```shell
+az spring service-registry bind --app ${IDENTITY_SERVICE_APP}
+```
+
+Create routing rules for the identity service application
+
+```shell
+az spring gateway route-config create \
+    --name ${IDENTITY_SERVICE_APP} \
+    --app-name ${IDENTITY_SERVICE_APP} \
+    --routes-file ./routes/identity-service.json
+```
+
+Deploy the Identity Service:
+
+```shell
+az spring app deploy --name ${IDENTITY_SERVICE_APP} \
+    --env "JWK_URI=${JWK_SET_URI}" \
+    --config-file-pattern identity/default \
+    --source-path apps/acme-identity
+```
+
+> Note: The application will take around 3-5 minutes to deploy.
+
+### 2.2. Update Existing Applications
 
 Update the existing applications to use authorization information from Spring Cloud Gateway:
 
@@ -87,18 +127,12 @@ az spring app  update --name ${ORDER_SERVICE_APP} \
 ```
 //TODO Explain how these env vars enable applications to use Gateway Authorization information
 
-### 2.2. Login to the Application through Spring Cloud Gateway
+### 2.3. Login to the Application through Spring Cloud Gateway
 
 Retrieve the URL for Spring Cloud Gateway and open it in a browser:
 
 ```shell
 open "https://${GATEWAY_URL}"
-```
-
-If using Azure Cloud Shell or Windows, open the output from the following command in a browser:
-
-```shell
-echo "https://${GATEWAY_URL}"
 ```
 
 You should see the ACME Fitness Store Application, and be able to log in using your
@@ -125,12 +159,6 @@ Open API Portal in a browser, this will redirect you to log in now:
 
 ```shell
 open "https://${PORTAL_URL}"
-```
-
-If using Azure Cloud Shell or Windows, open the output from the following command in a browser:
-
-```shell
-echo "https://${PORTAL_URL}"
 ```
 
 To access the protected APIs, click Authorize and follow the steps that match your
@@ -176,3 +204,7 @@ az spring app deploy --name ${IDENTITY_SERVICE_APP} \
 ```
 
 > Note: The application will take around 3-5 minutes to deploy.
+
+⬅️ Previous guide: [09 - Hands On Lab 3 - Spring Cloud Gateway Configuration](../09-hol-3-configure-spring-cloud-gateway/README.md)
+
+➡️ Next guide: [11 - Hands On Lab 5 - Configure Backing Services](../11-hol-5-configure-backing-services/README.md)
