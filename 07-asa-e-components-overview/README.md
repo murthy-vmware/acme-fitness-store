@@ -1,13 +1,9 @@
 This section introduces the different components that are part of ASA-E. 
 
-* [API Portal](api-portal/README.md)
-* [Application Config Service](application-config-service/README.md)
-* [Azure Active Directory](azure-active-directory/README.md)
-* [Azure Key Vault](azure-key-vault/README.md)
-* [Service Connectors](service-connectors/README.md)
-* [Tanzu Service Registry](tanzu-service-registry/README.md)
 * [Spring Cloud Gateway](spring-cloud-gateway/README.md)
 * [Tanzu Build Service](tanzu-build-service/README.md)
+* [Application Config Service](application-config-service/README.md)
+* [Azure Key Vault](azure-key-vault/README.md)
 
 After completing this section, you have a high level understanding of these different services, their role in the overall acme-fitness architecture.
 
