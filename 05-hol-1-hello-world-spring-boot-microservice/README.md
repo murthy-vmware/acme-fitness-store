@@ -77,7 +77,7 @@ In order to create the app instance graphically, you can use [the Azure portal](
 Alternatively, you can use the command line to create the app instance, which is easier:
 
 ```bash
-az spring app create -n hello-world --runtime-version Java_17
+az spring app create -n hello-world
 ```
 
 You can now build your "hello-world" project and deploy it to Azure Spring Apps Enterprise:
@@ -98,7 +98,7 @@ Go to [the Azure portal](https://portal.azure.com/):
 - Look for your Azure Spring Apps instance in your resource group
 - Click "Apps" in the "Settings" section of the navigation pane and select "hello-world"
 - Find the "Test endpoint" in the "Essentials" section.
-![Test endpoint](media/01-test-endpoint.png)
+![Test endpoint](images/test-endpoint.png)
 - This will give you something like:
   `https://primary:<REDACTED>@hello-world.test.azuremicroservices.io/hello-world/default/`
   >💡 Note the text between `https://` and `@`.  These are the basic authentication credentials, without which you will not be authorized to access the service.
@@ -112,6 +112,12 @@ curl https://primary:...hello-world/default/hello/
 
 If successful, you should see the message: `Hello from Azure Spring Apps Enterprise`.
 
+## Delete the hello-world app
+Once you successfully test the hellow-world app, please go ahead and delete the app to save costs. To delete this app, use the below command.
+
+```bash
+az spring app delete --name hello-world
+```
 ## Conclusion
 
 Congratulations, you have deployed your first Spring Boot microservice to Azure Spring Apps!
@@ -137,9 +143,9 @@ public class HelloController {
 }
 EOF
 mv HelloController.java src/main/java/com/example/demo/HelloController.java
-az spring app create -n simple-microservice --runtime-version Java_17
+az spring app create -n hello-world --runtime-version Java_17
 ./mvnw clean package
-az spring app deploy -n simple-microservice --artifact-path target/demo-0.0.1-SNAPSHOT.jar
+az spring app deploy -n hello-world --artifact-path target/demo-0.0.1-SNAPSHOT.jar
 cd ..
 ```
 

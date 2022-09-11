@@ -29,6 +29,8 @@ az spring gateway update \
 Routing rules bind endpoints in the request to the backend applications. For example in the Cart route below, the routing rule indicates any requests to /cart/** endpoint gets routed to backend Cart App.
 
 ```shell
+cd 09-hol-3-configure-spring-cloud-gateway
+
 az spring gateway route-config create \
     --name ${CART_SERVICE_APP} \
     --app-name ${CART_SERVICE_APP} \
@@ -48,6 +50,9 @@ az spring gateway route-config create \
     --name ${FRONTEND_APP} \
     --app-name ${FRONTEND_APP} \
     --routes-file ./routes/frontend.json
+
+cd ..
+```
 
 ### Access the Application through Spring Cloud Gateway
 
