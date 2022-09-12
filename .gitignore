@@ -5,13 +5,13 @@ __pycache__
 custom-filters
 
 
-scripts/setup-env-variables.sh
-scripts/setup-db-env-variables.sh
-scripts/setup-sso-variables.sh
-scripts/setup-env-variables-keyvault.sh
-redis.json
-ad.json
-sso.json
+workshop/scripts/setup-env-variables.sh
+workshop/scripts/setup-db-env-variables.sh
+workshop/scripts/setup-sso-variables.sh
+workshop/scripts/setup-env-variables-keyvault.sh
+workshop/redis.json
+workshop/ad.json
+workshop/sso.json
 
 # Local .terraform directories
 **/.terraform/*
