@@ -31,8 +31,7 @@ az spring build-service builder buildpack-binding set \
 ### Reload Applications
 
 Restart applications to reload configuration. For the Java applications, this will allow the new
-sampling rate to take effect. For the non-java applications, this will allow them to access
-the Instrumentation Key from Key Vault. 
+sampling rate to take effect. For the non-java applications, this will allow them to access the Instrumentation Key from Key Vault. 
 
 ```shell
 az spring app restart -n ${CART_SERVICE_APP}

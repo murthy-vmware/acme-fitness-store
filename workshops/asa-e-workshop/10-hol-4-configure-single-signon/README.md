@@ -47,7 +47,7 @@ More detailed instructions on Application Registrations can be found [here](http
 Set the environment using the provided script and verify the environment variables are set:
 
 ```shell
-source ../scripts/setup-sso-variables-ad.sh
+source ./scripts/setup-sso-variables-ad.sh
 
 echo ${CLIENT_ID}
 echo ${CLIENT_SECRET}
@@ -59,112 +59,7 @@ echo ${JWK_SET_URI}
 The `ISSUER_URI` should take the form `https://login.microsoftonline.com/${TENANT_ID}/v2.0`
 The `JWK_SET_URI` should take the form `https://login.microsoftonline.com/${TENANT_ID}/discovery/v2.0/keys`
 
-## 2. Configure Spring Cloud Gateway with SSO
-
-Configure Spring Cloud Gateway with SSO enabled:
-
-```shell
-az spring gateway update \
-    --client-id ${CLIENT_ID} \
-    --client-secret ${CLIENT_SECRET} \
-    --scope ${SCOPE} \
-    --issuer-uri ${ISSUER_URI} \
-    --no-wait
-```
-
-### 2.1. Deploy the Identity Service Application
-
-Create the identity service application
-
-```shell
-az spring app create --name ${IDENTITY_SERVICE_APP} --instance-count 1 --memory 1Gi
-```
-
-Bind the identity service to Application Configuration Service
-
-```shell
-az spring application-configuration-service bind --app ${IDENTITY_SERVICE_APP}
-```
-
-Bind the identity service to Service Registry.
-
-```shell
-az spring service-registry bind --app ${IDENTITY_SERVICE_APP}
-```
-
-Create routing rules for the identity service application
-
-```shell
-az spring gateway route-config create \
-    --name ${IDENTITY_SERVICE_APP} \
-    --app-name ${IDENTITY_SERVICE_APP} \
-    --routes-file ./routes/identity-service.json
-```
-
-Deploy the Identity Service:
-
-```shell
-az spring app deploy --name ${IDENTITY_SERVICE_APP} \
-    --env "JWK_URI=${JWK_SET_URI}" \
-    --config-file-pattern identity/default \
-    --source-path apps/acme-identity
-```
-
-> Note: The application will take around 3-5 minutes to deploy.
-
-### 2.2. Update Existing Applications
-
-Update the existing applications to use authorization information from Spring Cloud Gateway:
-
-```shell
-# Update the Cart Service
-az spring app update --name ${CART_SERVICE_APP} \
-    --env "AUTH_URL=https://${GATEWAY_URL}" "CART_PORT=8080" 
-    
-# Update the Order Service
-az spring app  update --name ${ORDER_SERVICE_APP} \
-    --env "AcmeServiceSettings__AuthUrl=https://${GATEWAY_URL}" 
-```
-//TODO Explain how these env vars enable applications to use Gateway Authorization information
-
-### 2.3. Login to the Application through Spring Cloud Gateway
-
-Retrieve the URL for Spring Cloud Gateway and open it in a browser:
-
-```shell
-open "https://${GATEWAY_URL}"
-```
-
-You should see the ACME Fitness Store Application, and be able to log in using your
-SSO Credentials. Once logged in, the remaining functionality of the application will
-be available. This includes adding items to the cart and placing an order.
-
-## 3. Configure SSO for API Portal
-
-Configure API Portal with SSO enabled:
-
-```shell
-export PORTAL_URL=$(az spring api-portal show | jq -r '.properties.url')
-
-az spring api-portal update \
-    --client-id ${CLIENT_ID} \
-    --client-secret ${CLIENT_SECRET}\
-    --scope "openid,profile,email" \
-    --issuer-uri ${ISSUER_URI}
-```
-
-### 3.1. Explore the API using API Portal
-
-Open API Portal in a browser, this will redirect you to log in now:
-
-```shell
-open "https://${PORTAL_URL}"
-```
-
-To access the protected APIs, click Authorize and follow the steps that match your
-SSO provider. Learn more about API Authorization with API Portal [here](https://docs.vmware.com/en/API-portal-for-VMware-Tanzu/1.0/api-portal/GUID-api-viewer.html#api-authorization)
-
-## 4. Deploy the Identity Service Application
+## 2. Deploy the Identity Service Application
 //TODO .. Explain the purpose of this service
 
 Create the identity service application
@@ -191,19 +86,86 @@ Create routing rules for the identity service application
 az spring gateway route-config create \
     --name ${IDENTITY_SERVICE_APP} \
     --app-name ${IDENTITY_SERVICE_APP} \
-    --routes-file routes/identity-service.json
+    --routes-file ./10-hol-4-configure-single-signon/routes/identity-service.json
 ```
 
-### 4.1. Deploy the Identity Service:
+### 2.1. Deploy the Identity Service:
 
 ```shell
 az spring app deploy --name ${IDENTITY_SERVICE_APP} \
     --env "JWK_URI=${JWK_SET_URI}" \
     --config-file-pattern identity/default \
-    --source-path apps/acme-identity
+    --source-path ../../apps/acme-identity
 ```
 
 > Note: The application will take around 3-5 minutes to deploy.
+
+## 3. Configure Spring Cloud Gateway with SSO
+
+Configure Spring Cloud Gateway with SSO enabled:
+
+```shell
+az spring gateway update \
+    --client-id ${CLIENT_ID} \
+    --client-secret ${CLIENT_SECRET} \
+    --scope ${SCOPE} \
+    --issuer-uri ${ISSUER_URI} \
+    --no-wait
+```
+
+### 3.1. Update Existing Applications
+
+Update the existing applications to use authorization information from Spring Cloud Gateway:
+
+```shell
+# Update the Cart Service
+az spring app update --name ${CART_SERVICE_APP} \
+    --env "AUTH_URL=https://${GATEWAY_URL}" "CART_PORT=8080" 
+    
+# Update the Order Service
+az spring app  update --name ${ORDER_SERVICE_APP} \
+    --env "AcmeServiceSettings__AuthUrl=https://${GATEWAY_URL}" 
+```
+//TODO Explain how these env vars enable applications to use Gateway Authorization information
+
+### 3.2. Login to the Application through Spring Cloud Gateway
+
+Retrieve the URL for Spring Cloud Gateway and open it in a browser:
+
+```shell
+open "https://${GATEWAY_URL}"
+```
+
+You should see the ACME Fitness Store Application, and be able to log in using your
+SSO Credentials. Once logged in, the remaining functionality of the application will
+be available. This includes adding items to the cart and placing an order.
+
+## 4. Configure SSO for API Portal
+
+Configure API Portal with SSO enabled:
+
+```shell
+export PORTAL_URL=$(az spring api-portal show | jq -r '.properties.url')
+
+az spring api-portal update \
+    --client-id ${CLIENT_ID} \
+    --client-secret ${CLIENT_SECRET}\
+    --scope "openid,profile,email" \
+    --issuer-uri ${ISSUER_URI}
+```
+
+### 4.1. Explore the API using API Portal
+
+Open API Portal in a browser, this will redirect you to log in now:
+
+```shell
+open "https://${PORTAL_URL}"
+```
+
+To access the protected APIs, click Authorize and follow the steps that match your
+SSO provider. Learn more about API Authorization with API Portal [here](https://docs.vmware.com/en/API-portal-for-VMware-Tanzu/1.0/api-portal/GUID-api-viewer.html#api-authorization)
+
+
 
 ⬅️ Previous guide: [09 - Hands On Lab 3 - Spring Cloud Gateway Configuration](../09-hol-3-configure-spring-cloud-gateway/README.md)
 

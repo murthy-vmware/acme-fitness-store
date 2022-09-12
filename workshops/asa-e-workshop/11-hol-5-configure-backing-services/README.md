@@ -148,14 +148,6 @@ az spring app update \
 
 ### View Persisted Data
 
-Verify cart data is now persisted in Redis by adding a few items to your cart. Then, restart the cart service:
-
-```shell
-az spring app restart --name ${CART_SERVICE_APP}
-```
-
-Notice that after restarting the cart service, the items in your cart will now persist.
-
 Verify order data is now persisted in a PostgreSQL Database by placing an order. View your placed orders with the following URL:
 
 ```text

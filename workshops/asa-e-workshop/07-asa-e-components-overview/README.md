@@ -1,3 +1,5 @@
+## This section is only for workshop facilitator, not for the participants
+
 This section introduces the different components that are part of ASA-E. 
 
 * [Spring Cloud Gateway](spring-cloud-gateway/README.md)

@@ -69,45 +69,34 @@ az spring build-service builder create -n ${CUSTOM_BUILDER} \
 
 Now that all the required services are configured, the next step is to go ahead and deploy the services/apps. For this we need access to the source code for the services. 
 
-Before we can create the services, we need to download the source code for the apps. Complete the below setps for that.
-
-```shell
-cd 08-hol-2-deploy-acme-fitness
-git clone https://github.com/Azure-Samples/acme-fitness-store.git -b Azure 
-cd acme-fitness-store
-```
 Now go ahead and create the apps.
 
 ```shell
 # Deploy Payment Service
 az spring app deploy --name ${PAYMENT_SERVICE_APP} \
     --config-file-pattern payment/default \
-    --source-path apps/acme-payment 
+    --source-path ../../apps/acme-payment 
 
 # Deploy Catalog Service
 az spring app deploy --name ${CATALOG_SERVICE_APP} \
     --config-file-pattern catalog/default \
-    --source-path apps/acme-catalog 
+    --source-path ../../apps/acme-catalog 
 
 # Deploy Order Service
 az spring app deploy --name ${ORDER_SERVICE_APP} \
     --builder ${CUSTOM_BUILDER} \
-    --source-path apps/acme-order 
+    --source-path ../../apps/acme-order 
 
 # Deploy Cart Service 
 az spring app deploy --name ${CART_SERVICE_APP} \
     --builder ${CUSTOM_BUILDER} \
     --env "CART_PORT=8080" \
-    --source-path apps/acme-cart 
+    --source-path ../../apps/acme-cart 
 
 # Deploy Frontend App
 az spring app deploy --name ${FRONTEND_APP} \
     --builder ${CUSTOM_BUILDER} \
-    --source-path apps/acme-shopping 
-```
-
-```shell
-cd ../..
+    --source-path ../../apps/acme-shopping 
 ```
 
 You will notice that we need to supply a custom builder for frontend, cart service and order service as these are not Java based apps. Also to note is config-file-pattern for payment and catalog services. As you might recall in previous step, we configured aplication config service for payment and catalog services. This argument is providing the file pattern. More details about this pattern can be found in the previous section [application configuration sevice](../07-asa-e-components-overview/application-config-service/README.md)
