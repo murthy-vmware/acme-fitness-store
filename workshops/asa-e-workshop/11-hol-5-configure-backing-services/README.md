@@ -3,43 +3,45 @@ By default, several services use in-memory data storage. This unit will create p
 Once this section is complete, the architecture looks as below:
 ![architecture](images/postgres-redis.png) 
 
-### Prepare your environment
+## 1. Prepare your environment
+
+Make sure that you are in `asa-e-workshop` directory
 
 Create a bash script with environment variables by making a copy of the supplied template:
 
 ```shell
-cp ../scripts/setup-db-env-variables-template.sh ../scripts/setup-db-env-variables.sh
+cp ./scripts/setup-db-env-variables-template.sh ./scripts/setup-db-env-variables.sh
 ```
 
-Open `../scripts/setup-db-env-variables.sh` and enter the following information:
+Open `./scripts/setup-db-env-variables.sh` and enter the following information:
 
 ```shell
 export AZURE_CACHE_NAME=acme-fitness-cache-CHANGE-ME                 #Unique name for Azure Cache for Redis Instance. Replace CHANGE_ME with the 4 unique characters that were created as part of ARM template in Section 3. [workshop-environment-setup](../03-workshop-environment-setup/README.md)
-export POSTGRES_SERVER=<subscription-name>-db                   # Unique name for Azure Database for PostgreSQL Flexible Server. Replace CHANGE_ME with the 4 unique characters that were created as part of ARM template in Section 3.
+export POSTGRES_SERVER=acme-fitness-db-CHANGE-ME                 # Unique name for Azure Database for PostgreSQL Flexible Server. Replace CHANGE_ME with the 4 unique characters that were created as part of ARM template in Section 3.
 ```
 
 Then, set the environment:
 
 ```shell
-source ../scripts/setup-db-env-variables.sh
+source ./scripts/setup-db-env-variables.sh
 ```
 
 
-# Allow connections from other Azure Services
+### 1.1. Allow connections from other Azure Services
 ```shell
 az postgres flexible-server firewall-rule create --rule-name allAzureIPs \
      --name ${POSTGRES_SERVER} \
      --resource-group ${RESOURCE_GROUP} \
      --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
      
-# Enable the uuid-ossp extension
+### Enable the uuid-ossp extension
 az postgres flexible-server parameter set \
     --resource-group ${RESOURCE_GROUP} \
     --server-name ${POSTGRES_SERVER} \
     --name azure.extensions --value uuid-ossp
 ```
 
-Create a database for the order service:
+## 2. Create a database for the services:
 
 ```shell
 az postgres flexible-server db create \
@@ -57,7 +59,7 @@ az postgres flexible-server db create \
 
 > Note: wait for all services to be ready before continuing
 
-### Create Service Connectors
+## 3. Create Service Connectors
 
 The Order Service and Catalog Service use Azure Database for Postgres, create Service Connectors for those applications:
 
@@ -109,7 +111,7 @@ az spring connection create redis \
 > The cart service uses a client connection type of java because the connection strings are the same for python and java.
 > This will be changed when additional options become available in the CLI.
 
-### Update Applications
+## 4. Update Applications
 
 Next, update the affected applications to use the newly created databases and redis cache.
 
@@ -118,7 +120,7 @@ Restart the Catalog Service for the Service Connector to take effect:
 az spring app restart --name ${CATALOG_SERVICE_APP}
 ```
 
-Retrieve the PostgreSQL connection string and update the Catalog Service:
+Retrieve the PostgreSQL connection string and update the Order Service:
 ```shell
 POSTGRES_CONNECTION_STR=$(az spring connection show \
     --resource-group ${RESOURCE_GROUP} \
@@ -146,7 +148,7 @@ az spring app update \
     --env "CART_PORT=8080" "REDIS_CONNECTIONSTRING=${REDIS_CONN_STR}" "AUTH_URL=https://${GATEWAY_URL}"
 ```
 
-### View Persisted Data
+## 5. View Persisted Data
 
 Verify order data is now persisted in a PostgreSQL Database by placing an order. View your placed orders with the following URL:
 
