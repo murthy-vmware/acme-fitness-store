@@ -5,13 +5,13 @@ __pycache__
 custom-filters
 
 
-workshop/scripts/setup-env-variables.sh
-workshop/scripts/setup-db-env-variables.sh
-workshop/scripts/setup-sso-variables.sh
-workshop/scripts/setup-env-variables-keyvault.sh
-workshop/redis.json
-workshop/ad.json
-workshop/sso.json
+workshops/azure-spring-apps-enterprise/scripts/setup-env-variables.sh
+workshops/azure-spring-apps-enterprise/scripts/setup-db-env-variables.sh
+workshops/azure-spring-apps-enterprise/scripts/setup-sso-variables.sh
+workshops/azure-spring-apps-enterprise/scripts/setup-env-variables-keyvault.sh
+workshops/azure-spring-apps-enterprise/redis.json
+workshops/azure-spring-apps-enterprise/ad.json
+workshops/azure-spring-apps-enterprise/sso.json
 
 # Local .terraform directories
 **/.terraform/*
