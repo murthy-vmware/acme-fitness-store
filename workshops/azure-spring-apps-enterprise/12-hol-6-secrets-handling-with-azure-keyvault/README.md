@@ -61,7 +61,7 @@ export REDIS_PORT=$(cat redis.json | jq -r '.sslPort')
 export REDIS_PRIMARY_KEY=$(az redis list-keys -n ${AZURE_CACHE_NAME} | jq -r '.primaryKey')
 
 az keyvault secret set --vault-name ${KEY_VAULT} \
-  --name "CART-REDIS-CONNECTION-STRING" --value "rediss://:${REDIS_PRIMARY_KEY}@${REDIS_HOST}:${REDIS_PORT}/0"
+  --name "CART-REDIS-CONNECTION-STRING" --value "rediss://:${REDIS_PRIMARY_KEY}@${REDIS_HOST}:${REDIS_PORT}/0"  
 ```
 
 ## 4. Store SSO Secrets in Key Vault.
@@ -109,7 +109,7 @@ az keyvault set-policy --name ${KEY_VAULT} \
 
 ## 7. Activate applications to load secrets from Azure Key Vault
 
-Delete Service Connectors and activate applications to load secrets from Azure Key Vault.
+Delete Service Connectors and activate applications to load secrets from Azure Key Vault using environment variables.
 
 ```shell
 az spring connection delete \
@@ -153,3 +153,7 @@ az spring app update --name ${CART_SERVICE_APP} \
 
 ## 8. Test the application
 Open the app, add items to the cart and submit the orders to make sure everything is working as expected.
+
+⬅️ Previous guide: [11 - Hands On Lab 5 - Configure Backing Services](../11-hol-5-configure-backing-services/README.md)
+
+➡️ Next guide: [13 - End-End Observability](../13-end-to-end-observability/README.md)
