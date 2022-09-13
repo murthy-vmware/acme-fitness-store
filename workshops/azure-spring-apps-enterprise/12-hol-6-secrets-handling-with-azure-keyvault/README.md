@@ -3,22 +3,34 @@ In this unit, you will use Azure Key Vault to securely store and load secrets to
 Once this section is complete, the architecture looks as below:
 ![architecture](images/key-vault.png) 
 
-### Create Azure Key Vault and store secrets
+## 1. Prepare your environment
 
-Choose a unique name for your Key Vault and set an environment variable:
+Make sure that you are in `asa-e-workshop` directory
+
+Create a bash script with environment variables by making a copy of the supplied template:
 
 ```shell
-export KEY_VAULT=change-me      # customize this
+cp ./scripts/setup-keyvault-env-variables-template.sh ./scripts/setup-keyvault-env-variables.sh
 ```
 
-Create an Azure Key Vault and store connection secrets.
+Open `./scripts/setup-keyvault-env-variables.sh` and update the following information:
 
 ```shell
-az keyvault create --name ${KEY_VAULT} -g ${RESOURCE_GROUP}
+export KEY_VAULT=acme-fitness-kv-CHANGE-ME     # Unique name for Azure Key Vault. Replace CHANGE_ME with the 4 unique characters that were created as part of ARM template in Section 3.
+```
+
+Then, set the environment:
+
+```shell
+source ./scripts/setup-keyvault-env-variables.sh
+```
+
+Store Key Vault URI.
+
+```shell
 export KEYVAULT_URI=$(az keyvault show --name ${KEY_VAULT} | jq -r '.properties.vaultUri')
 ```
-
-### Store database connection secrets in Key Vault.
+## 2. Store database connection secrets in Key Vault.
 
 ```shell
 export POSTGRES_SERVER_FULL_NAME="${POSTGRES_SERVER}.postgres.database.azure.com"
@@ -27,7 +39,7 @@ az keyvault secret set --vault-name ${KEY_VAULT} \
     --name "POSTGRES-SERVER-NAME" --value ${POSTGRES_SERVER_FULL_NAME}
 
 az keyvault secret set --vault-name ${KEY_VAULT} \
-    --name "ConnectionStrings--OrderContext" --value "Server=${POSTGRES_SERVER_FULL_NAME};Database=${ORDER_SERVICE_DB};Port=5432;Ssl Mode=Require;User Id=${POSTGRES_SERVER_USER};Password=${POSTGRES_SERVER_PASSWORD};"
+    --name "ConnectionStrings--OrderContext" --value "Server=${POSTGRES_SERVER_FULL_NAME};Database=${ORDER_SERVICE_DB};Port=5432;Ssl Mode=Require;User Id=${POSTGRES_SERVER_USER};Password=${POSTGRES_SERVER_PASSWORD}"
     
 az keyvault secret set --vault-name ${KEY_VAULT} \
     --name "CATALOG-DATABASE-NAME" --value ${CATALOG_SERVICE_DB}
@@ -39,7 +51,7 @@ az keyvault secret set --vault-name ${KEY_VAULT} \
     --name "POSTGRES-LOGIN-PASSWORD" --value ${POSTGRES_SERVER_PASSWORD}
 ```
 
-### Retrieve and store redis connection secrets in Key Vault.
+## 3. Retrieve and store redis connection secrets in Key Vault.
 
 ```shell
 az redis show -n ${AZURE_CACHE_NAME} > redis.json
@@ -52,7 +64,7 @@ az keyvault secret set --vault-name ${KEY_VAULT} \
   --name "CART-REDIS-CONNECTION-STRING" --value "rediss://:${REDIS_PRIMARY_KEY}@${REDIS_HOST}:${REDIS_PORT}/0"
 ```
 
-### Store SSO Secrets in Key Vault.
+## 4. Store SSO Secrets in Key Vault.
 
 ```shell
 az keyvault secret set --vault-name ${KEY_VAULT} \
@@ -61,7 +73,7 @@ az keyvault secret set --vault-name ${KEY_VAULT} \
 
 > Note: Creating the SSO-PROVIDER-JWK-URI Secret can be skipped if not configuring Single Sign On
 
-### Enable System Assigned Identities for applications and export identities to environment.
+## 5. Enable System Assigned Identities for applications and export identities to environment.
 
 ```shell
 az spring app identity assign --name ${CART_SERVICE_APP}
@@ -77,7 +89,7 @@ az spring app identity assign --name ${IDENTITY_SERVICE_APP}
 export IDENTITY_SERVICE_APP_IDENTITY=$(az spring app show --name ${IDENTITY_SERVICE_APP} | jq -r '.identity.principalId')
 ```
 
-### Add an access policy to Azure Key Vault to allow Managed Identities to read secrets.
+## 6. Add an access policy to Azure Key Vault to allow Managed Identities to read secrets.
 
 ```shell
 az keyvault set-policy --name ${KEY_VAULT} \
@@ -93,9 +105,9 @@ az keyvault set-policy --name ${KEY_VAULT} \
     --object-id ${IDENTITY_SERVICE_APP_IDENTITY} --secret-permissions get list
 ```
 
-> Note: Identity Service will not exist if you haven't completed Unit 2. Skip configuring an identity or policy for this service if not configuring Single Sign-On at this point.
+> Note: Identity Service will not exist if you haven't completed [Section 10](../10-hol-4-configure-single-signon/README.md). Skip configuring an identity or policy for this service if not configuring Single Sign-On at this point.
 
-### Activate applications to load secrets from Azure Key Vault
+## 7. Activate applications to load secrets from Azure Key Vault
 
 Delete Service Connectors and activate applications to load secrets from Azure Key Vault.
 
@@ -137,6 +149,7 @@ az spring app update --name ${IDENTITY_SERVICE_APP} \
     
 az spring app update --name ${CART_SERVICE_APP} \
     --env "CART_PORT=8080" "KEYVAULT_URI=${KEYVAULT_URI}" "AUTH_URL=https://${GATEWAY_URL}"
+```
 
-
-//Add section to validate end-end again to make sure everything is working fine.
+## 8. Test the application
+Open the app, add items to the cart and submit the orders to make sure everything is working as expected.

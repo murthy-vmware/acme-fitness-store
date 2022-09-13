@@ -1,1 +1,0 @@
-## This section is only for workshop facilitator, not for the participants
