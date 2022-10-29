@@ -327,7 +327,46 @@
                                     "geoRedundantBackup": "Disabled"
                                 },
                                 "availabilityZone": "[parameters('availabilityZone')]"
-                            }
+                            },
+                            "resources": [
+                                {
+                                    "type": "firewallRules",
+                                    "apiVersion": "2022-01-20-preview",
+                                    "name": "[concat(variables('dbName'),'firewall')]",
+                                    "location": "[parameters('location')]",
+                                    "dependsOn": [
+                                        "[variables('dbName')]"
+                                    ],
+                                    "properties": {
+                                        "startIpAddress": "0.0.0.0",
+                                        "endIpAddress": "255.255.255.255"
+                                    }
+                                },
+                                {
+                                    "type": "databases",
+                                    "apiVersion": "2022-01-20-preview",
+                                    "name": "acmefit_order",
+                                    "dependsOn": [
+                                        "[variables('dbName')]"
+                                    ],
+                                    "properties": {
+                                        "charset": "utf8",
+                                        "collation": "English_United States.1252"
+                                    }
+                                },
+                                {
+                                    "type": "databases",
+                                    "apiVersion": "2022-01-20-preview",
+                                    "name": "acmefit_catalog",
+                                    "dependsOn": [
+                                        "[variables('dbName')]"
+                                    ],
+                                    "properties": {
+                                        "charset": "utf8",
+                                        "collation": "English_United States.1252"
+                                    }
+                                }
+                            ]
                         },
                         {
                             "type": "Microsoft.OperationalInsights/workspaces",
