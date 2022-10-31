@@ -27,19 +27,10 @@
 		"azure-cli": "latest",
 		"docker-from-docker": "latest",
 		"node": "lts",
-		"ghcr.io/devcontainers/features/python:1": {
-			"version": "latest",
-			"installJupyterlab": false
-		},
 		"ghcr.io/devcontainers/features/java:1": {
 			"version": "17",
 			"installGradle": true,
 			"installMaven": true
-		},
-		"ghcr.io/devcontainers/features/dotnet:1": {
-			"version": "6",
-			"runtimeOnly": false,
-			"installUsingApt": false
 		}
 	}
 }
