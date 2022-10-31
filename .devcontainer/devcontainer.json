@@ -35,11 +35,6 @@
 			"version": "17",
 			"installGradle": true,
 			"installMaven": true
-		},
-		"ghcr.io/devcontainers/features/dotnet:1": {
-			"version": "6",
-			"runtimeOnly": false,
-			"installUsingApt": false
 		}
 	}
 }
